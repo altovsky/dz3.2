@@ -77,16 +77,8 @@ angela = User(
     **response_user.json()['response'][0]
 )
 
-response_user = requests.get(
-    'https://api.vk.com/method/users.get',
-    params=dict(
-        user_ids=483136631,
-        access_token=TOKEN,
-        v=5.80
-    )
-)
-
 bitwise = maxim & angela
+
 print('Общие друзья:')
 for iter in range(len(bitwise)):
     print(
