@@ -11,11 +11,15 @@ TOKEN = '13b5a25dabe0a22d743b3b1caf1559b4a8fffdfd28cf025ffab00c26f0630134ee5970d
 
 
 class User:
-    def __init__(self, id, first_name, last_name):
+    def __init__(self, id, first_name, last_name, domain):
         self.id = id
         self.first_name = first_name
         self.last_name = last_name
         self.token = TOKEN
+        self.domain = domain
+
+    def __str__(self):
+        return f'https://vk.com/{self.domain}'
 
     def __and__(self, other):
         response = requests.get(
@@ -34,6 +38,7 @@ class User:
                 'https://api.vk.com/method/users.get',
                 params=dict(
                     user_ids=user,
+                    fields='domain',
                     access_token=TOKEN,
                     v=5.80
                 )
@@ -49,6 +54,7 @@ response_user = requests.get(
     'https://api.vk.com/method/users.get',
     params=dict(
         user_ids=USER_ID_1,
+        fields='domain',
         access_token=TOKEN,
         v=5.80
     )
@@ -61,6 +67,7 @@ response_user = requests.get(
     'https://api.vk.com/method/users.get',
     params=dict(
         user_ids=USER_ID_2,
+        fields='domain',
         access_token=TOKEN,
         v=5.80
     )
@@ -79,4 +86,10 @@ response_user = requests.get(
 )
 
 bitwise = maxim & angela
-print(bitwise)
+print('Общие друзья:')
+for iter in range(len(bitwise)):
+    print(
+        globals()[f'user{iter}'].first_name,
+        globals()[f'user{iter}'].last_name,
+        globals()[f'user{iter}'],
+    )
